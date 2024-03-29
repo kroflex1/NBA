@@ -20,9 +20,9 @@ public class Player {
     @Column(name = "surname", nullable = false)
     String surname;
     @Column(name = "from_year", nullable = false)
-    int fromYear;
+    Integer fromYear;
     @Column(name = "to_year", nullable = false)
-    int toYear;
+    Integer toYear;
 
     public Player(String name, String surname, int fromYear, int toYear) {
         this.name = name;

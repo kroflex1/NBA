@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset Artyom:2
+--changeset Artyom:1
 
 CREATE TABLE teams
 (
