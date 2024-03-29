@@ -1,0 +1,11 @@
+spring:
+  liquibase:
+    enabled: false
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/nba"
+    username: "postgres"
+    password: "postgres"
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true

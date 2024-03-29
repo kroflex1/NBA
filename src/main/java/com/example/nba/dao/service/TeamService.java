@@ -1,11 +1,14 @@
 package com.example.nba.dao.service;
 
-import com.example.nba.dao.model.Player;
-import com.example.nba.dao.model.Team;
+import com.example.nba.dao.entity.Player;
+import com.example.nba.dao.entity.Team;
 import com.example.nba.dao.repository.TeamRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -20,22 +23,22 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
-    public Team addPlayerToTeam(Long teamId, Player player) throws IllegalArgumentException {
-        Team team = getTeamById(teamId);
+    public List<Team> getAll() {
+        List<Team> teams = new ArrayList<>();
+        teamRepository.findAll().forEach(teams::add);
+        return teams;
+    }
+
+    @Transactional
+    public Team addPlayerToTeam(Long teamId, Player player) throws NoSuchElementException {
+        Team team = teamRepository.findById(teamId).orElseThrow();
         team.addPlayer(player);
         return teamRepository.save(team);
     }
 
-    public List<Player> getPlayersFromTeam(Long teamId) {
-        Team team = getTeamById(teamId);
+    @Transactional
+    public List<Player> getPlayersFromTeam(Long teamId) throws NoSuchElementException {
+        Team team = teamRepository.findById(teamId).orElseThrow();
         return team.getPlayersInTeam();
-    }
-
-    private Team getTeamById(Long teamId) throws IllegalArgumentException {
-        Optional<Team> team = teamRepository.findById(teamId);
-        if (team.isEmpty()) {
-            throw new IllegalArgumentException("command with id=%d wasn`t found".formatted(teamId));
-        }
-        return teamRepository.save(team.get());
     }
 }

@@ -1,23 +1,21 @@
-package com.example.nba.dao.model;
+package com.example.nba.dao.entity;
 
 import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "teams")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Team {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(name = "name")
@@ -25,11 +23,11 @@ public class Team {
     @Column(name = "city")
     String city;
 
-    @OneToMany
-    @JoinColumn(name = "team_id")
-    List<Player> playersInTeam;
+    @OneToMany(mappedBy = "team")
+    List<Player> playersInTeam = new ArrayList<>();
 
-    public Team(@Nullable String name, @Nullable String city) {
+    public Team(Long id, @Nullable String name, @Nullable String city) {
+        this.id = id;
         this.name = name;
         this.city = city;
     }
