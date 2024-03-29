@@ -4,6 +4,7 @@ import com.example.nba.dao.entity.Player;
 import com.example.nba.dao.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,15 @@ public class PlayerService {
     }
 
 
+    @Transactional
     public List<Player> getAll() {
         List<Player> players = new ArrayList<>();
         playerRepository.findAll().forEach(players::add);
         return players;
     }
 
-
+    @Transactional
+    public List<Player> getTopPlayersByCareerDuration(int top) {
+        return playerRepository.findTopPlayersByCareerDuration(top);
+    }
 }

@@ -5,7 +5,7 @@ CREATE TABLE players
 (
     id        BIGSERIAL   NOT NULL,
     name      VARCHAR(50) NOT NULL,
-    surname   VARCHAR(50) NOT NULL,
+    surname   VARCHAR(50),
     from_year INT         NOT NULL,
     to_year   INT         NOT NULL,
     team_id   BIGINT      NOT NULL,

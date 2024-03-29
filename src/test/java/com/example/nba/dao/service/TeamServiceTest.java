@@ -26,7 +26,7 @@ public class TeamServiceTest extends IntegrationTest {
     @Rollback
     public void testAddNewTeam() {
         Team expected = new Team(1L, "Lakers", "Los Angeles");
-        teamService.save(expected);
+        teamService.addTeam(expected);
 
         List<Team> teams = teamService.getAll();
 
@@ -38,8 +38,8 @@ public class TeamServiceTest extends IntegrationTest {
     @Rollback
     public void testAddAlreadyExistTeam() {
         Team team = new Team(1L, "Lakers", "Los Angeles");
-        teamService.save(team);
-        teamService.save(team);
+        teamService.addTeam(team);
+        teamService.addTeam(team);
 
         List<Team> actual = teamService.getAll();
         assertTrue(actual.size() == 1);
@@ -51,7 +51,7 @@ public class TeamServiceTest extends IntegrationTest {
     public void testAddPlayerToTeam() {
         Team team = new Team(1L, "Lakers", "Los Angeles");
         Player player = new Player("Dima", "Lebedev", 1950, 1960);
-        teamService.save(team);
+        teamService.addTeam(team);
         teamService.addPlayerToTeam(team.getId(), player);
 
         Player actual = teamService.getPlayersFromTeam(team.getId()).get(0);
@@ -64,7 +64,7 @@ public class TeamServiceTest extends IntegrationTest {
     @Rollback
     public void testGetPlayersFromTeam() {
         Team team = new Team(1L, "Lakers", "Los Angeles");
-        teamService.save(team);
+        teamService.addTeam(team);
         List<Player> expected = List.of(
                 new Player("Vova", "Borsukov", 1967, 1988),
                 new Player("Dima", "Lorikov", 1954, 2000),

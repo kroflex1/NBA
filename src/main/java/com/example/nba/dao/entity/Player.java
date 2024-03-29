@@ -1,5 +1,6 @@
 package com.example.nba.dao.entity;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +17,7 @@ public class Player {
     @Column(name = "name", nullable = false)
     String name;
 
-    @Column(name = "surname", nullable = false)
+    @Column(name = "surname")
     String surname;
 
     @Column(name = "from_year", nullable = false)
@@ -30,7 +31,7 @@ public class Player {
     @EqualsAndHashCode.Exclude
     Team team;
 
-    public Player(String name, String surname, int fromYear, int toYear) throws IllegalArgumentException {
+    public Player(String name, @Nullable String surname, int fromYear, int toYear) throws IllegalArgumentException {
         checkCareerDates(fromYear, toYear);
         this.name = name;
         this.surname = surname;

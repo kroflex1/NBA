@@ -19,11 +19,14 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public Team save(Team team) {
-        return teamRepository.save(team);
+    @Transactional
+    public void addTeam(Team team) {
+        if (!teamRepository.existsById(team.getId())) {
+            teamRepository.save(team);
+        }
     }
 
-
+    @Transactional
     public List<Team> getAll() {
         List<Team> teams = new ArrayList<>();
         teamRepository.findAll().forEach(teams::add);
