@@ -16,7 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Component
-public class Filler  {
+public class Filler implements ApplicationRunner {
     private final static int PLAYER_NAME_INDEX = 2;
     private final static int FROM_YEAR_INDEX = 3;
     private final static int TO_YEAR_INDEX = 14;
@@ -32,11 +32,11 @@ public class Filler  {
     }
 
 
-//    @Override
-//    public void run(ApplicationArguments args) throws Exception {
-//        Path path = new File(".").getAbsoluteFile().toPath().getParent().resolve(Path.of("src", "main", "resources", "static", "NBA-playerlist.csv"));
-//        fillTablesFromCsvFile(path);
-//    }
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        Path path = new File(".").getAbsoluteFile().toPath().getParent().resolve(Path.of("src", "main", "resources", "static", "NBA-playerlist.csv"));
+        fillTablesFromCsvFile(path);
+    }
 
     private void fillTablesFromCsvFile(Path filePath) throws Exception {
         try (Reader reader = Files.newBufferedReader(filePath)) {
