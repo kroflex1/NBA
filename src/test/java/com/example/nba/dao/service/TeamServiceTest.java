@@ -10,7 +10,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -52,7 +51,6 @@ public class TeamServiceTest extends IntegrationTest {
     public void testAddPlayerToTeam() {
         Team team = new Team(1L, "Lakers", "Los Angeles");
         Player player = new Player("Dima", "Lebedev", 1950, 1960);
-        playerService.save(player);
         teamService.save(team);
         teamService.addPlayerToTeam(team.getId(), player);
 
@@ -64,9 +62,21 @@ public class TeamServiceTest extends IntegrationTest {
 
     @Test
     @Rollback
-    public void testAddSeveralPlayers(){
-        Set<Player> expected = List.of(
+    public void testGetPlayersFromTeam() {
+        Team team = new Team(1L, "Lakers", "Los Angeles");
+        teamService.save(team);
+        List<Player> expected = List.of(
                 new Player("Vova", "Borsukov", 1967, 1988),
-                new Player())
+                new Player("Dima", "Lorikov", 1954, 2000),
+                new Player("Danil", "Gemaev", 2004, 2012),
+                new Player("Robert", "Polson", 2014, 2016));
+        for (Player player : expected) {
+            teamService.addPlayerToTeam(team.getId(), player);
+        }
+
+        List<Player> actual =  teamService.getPlayersFromTeam(team.getId());
+
+        assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
     }
+
 }

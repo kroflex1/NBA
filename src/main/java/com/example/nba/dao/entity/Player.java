@@ -1,10 +1,7 @@
 package com.example.nba.dao.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "players")
@@ -13,6 +10,7 @@ import lombok.Setter;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
     Long id;
 
     @Column(name = "name", nullable = false)
@@ -28,14 +26,24 @@ public class Player {
     Integer toYear;
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "team_id", nullable = false)
+    @EqualsAndHashCode.Exclude
     Team team;
 
-
-    public Player(String name, String surname, int fromYear, int toYear) {
+    public Player(String name, String surname, int fromYear, int toYear) throws IllegalArgumentException {
+        checkCareerDates(fromYear, toYear);
         this.name = name;
         this.surname = surname;
         this.fromYear = fromYear;
         this.toYear = toYear;
+    }
+
+    private void checkCareerDates(int fromYear, int toYear) throws IllegalArgumentException {
+        if (fromYear > toYear) {
+            throw new IllegalArgumentException("End date of career cannot be earlier than start date of career");
+        }
+        if (toYear - fromYear > 100) {
+            throw new IllegalArgumentException("Duration of career can`t be more than 100 years");
+        }
     }
 }

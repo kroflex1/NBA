@@ -18,10 +18,6 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    public Player save(Player player) throws IllegalArgumentException {
-        checkCareerDates(player.getFromYear(), player.getToYear());
-        return playerRepository.save(player);
-    }
 
     public List<Player> getAll() {
         List<Player> players = new ArrayList<>();
@@ -29,12 +25,5 @@ public class PlayerService {
         return players;
     }
 
-    private void checkCareerDates(int fromYear, int toYear) throws IllegalArgumentException {
-        if (fromYear > toYear) {
-            throw new IllegalArgumentException("End date of career cannot be earlier than start date of career");
-        }
-        if (toYear - fromYear > 100) {
-            throw new IllegalArgumentException("Duration of career can`t be more than 100 years");
-        }
-    }
+
 }

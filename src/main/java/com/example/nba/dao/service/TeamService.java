@@ -23,6 +23,7 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
+
     public List<Team> getAll() {
         List<Team> teams = new ArrayList<>();
         teamRepository.findAll().forEach(teams::add);

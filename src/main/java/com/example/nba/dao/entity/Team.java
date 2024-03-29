@@ -2,10 +2,7 @@ package com.example.nba.dao.entity;
 
 import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,8 @@ public class Team {
     @Column(name = "city")
     String city;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
     List<Player> playersInTeam = new ArrayList<>();
 
     public Team(Long id, @Nullable String name, @Nullable String city) {
@@ -32,8 +30,8 @@ public class Team {
         this.city = city;
     }
 
-    public Team addPlayer(Player player) {
+    public void addPlayer(Player player) {
+        player.setTeam(this);
         playersInTeam.add(player);
-        return this;
     }
 }
