@@ -13,15 +13,15 @@ import lombok.Setter;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     String name;
-    @Column(name = "surname")
+    @Column(name = "surname", nullable = false)
     String surname;
-    @Column(name = "from_year")
+    @Column(name = "from_year", nullable = false)
     int fromYear;
-    @Column(name = "to_year")
+    @Column(name = "to_year", nullable = false)
     int toYear;
 
     public Player(String name, String surname, int fromYear, int toYear) {

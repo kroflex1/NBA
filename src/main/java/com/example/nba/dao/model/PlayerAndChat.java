@@ -18,8 +18,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PlayerAndChat {
     @Id
-    long playerId;
+    Long playerId;
 
     @Id
-    long teamId;
+    Long teamId;
 }
